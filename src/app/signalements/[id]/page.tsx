@@ -1,6 +1,9 @@
 import Todo from "@/components/Todo";
+import AssignForm from "@/components/AssignForm";
 
-export default function Page() {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   return (
     <section className="space-y-4">
       <h1 className="text-2xl font-bold">Détail du signalement</h1>
@@ -12,6 +15,7 @@ export default function Page() {
         "Saif : bouton Soutenir + commentaires",
         ]}
       />
+      <AssignForm reportId={id} />
     </section>
   );
 }
