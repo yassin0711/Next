@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LocalImpact
 
-## Getting Started
+Plateforme de signalement et de suivi des problèmes du quotidien : matériel défectueux, accessibilité, éclairage, propreté, équipement informatique…
 
-First, run the development server:
+**Stack :** Next.js 15 (App Router), React 19, Prisma (SQLite en local), NextAuth (connexion par identifiants), Zod, Tailwind CSS, Recharts.
+
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env        # puis changer NEXTAUTH_SECRET
+npm run db:migrate          # crée la base SQLite
+npm run db:seed             # crée les comptes de démonstration
+npm run dev                 # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Comptes de démonstration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Rôle | Email | Mot de passe |
+|---|---|---|
+| Administrateur | admin@demo.tn | demo1234 |
+| Responsable | responsable@demo.tn | demo1234 |
+| Utilisateur | user@demo.tn | demo1234 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Organisation du code
 
-## Learn More
+```
+prisma/schema.prisma     modèle de données (User, Report, Support, Comment, StatusHistory)
+src/lib/                 prisma, auth (requireRole), validations Zod, constantes, gestion d'erreurs API
+src/middleware.ts        protection des pages selon le rôle
+src/app/api/             routes API (toujours vérifier le rôle côté serveur)
+src/app/                 pages
+src/components/          composants réutilisables
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Rôles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Utilisateur** : crée, consulte, soutient et commente des signalements.
+- **Responsable** : traite les signalements qui lui sont assignés (changement de statut).
+- **Administrateur** : gère les rôles, assigne les signalements, peut tout modifier.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Une inscription crée toujours un compte « Utilisateur ». Seul un administrateur peut changer un rôle.
 
-## Deploy on Vercel
+## Répartition du travail
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Voir [TACHES.md](TACHES.md).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Limites connues
+
+- SQLite est utilisé en local. Pour le déploiement, il faudra passer à PostgreSQL (changer `provider` dans `schema.prisma`).
+- L'application est en cours de développement : les pages marquées « À faire » ne sont pas encore réalisées.

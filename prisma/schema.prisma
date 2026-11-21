@@ -1,0 +1,82 @@
+// Modèle de données LocalImpact
+// Rôles et statuts sont stockés en String (SQLite) : valeurs autorisées dans src/lib/constants.ts
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("USER") // USER | RESPONSABLE | ADMIN
+  createdAt DateTime @default(now())
+
+  reports   Report[]        @relation("ReportAuthor")
+  assigned  Report[]        @relation("ReportAssignee")
+  supports  Support[]
+  comments  Comment[]
+  history   StatusHistory[]
+}
+
+model Report {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  category    String
+  location    String
+  photoUrl    String?
+  status      String    @default("NOUVEAU") // NOUVEAU | PRIS_EN_CHARGE | EN_COURS | RESOLU
+  resolution  String?   // obligatoire quand status = RESOLU
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resolvedAt  DateTime?
+
+  authorId    String
+  author      User    @relation("ReportAuthor", fields: [authorId], references: [id])
+  assigneeId  String?
+  assignee    User?   @relation("ReportAssignee", fields: [assigneeId], references: [id])
+
+  supports    Support[]
+  comments    Comment[]
+  history     StatusHistory[]
+}
+
+model Support {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, reportId]) // un seul soutien par utilisateur et par signalement
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model StatusHistory {
+  id         String   @id @default(cuid())
+  fromStatus String?
+  toStatus   String
+  note       String?
+  createdAt  DateTime @default(now())
+  authorId   String
+  author     User     @relation(fields: [authorId], references: [id])
+  reportId   String
+  report     Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
