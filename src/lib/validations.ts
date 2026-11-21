@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, STATUSES } from "@/lib/constants";
 
 // Schémas partagés : utilisés côté client (formulaires) ET côté serveur (API)
 
@@ -28,4 +28,9 @@ export const commentSchema = z.object({
 
 export const assignSchema = z.object({
   assigneeId: z.string().min(1, "Responsable requis"),
+});
+
+export const statusSchema = z.object({
+  status: z.enum(STATUSES, { message: "Statut invalide" }),
+  note: z.string().trim().max(2000).optional(),
 });
