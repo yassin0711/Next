@@ -25,3 +25,7 @@ export const reportSchema = z.object({
 export const commentSchema = z.object({
   content: z.string().trim().min(1, "Commentaire vide").max(1000),
 });
+
+export const assignSchema = z.object({
+  assigneeId: z.string().min(1, "Responsable requis"),
+});
