@@ -6,4 +6,4 @@ export function normalize(text: string) {
 // Vrai si le texte contient la recherche, sans tenir compte des accents ni des majuscules
 export function includesText(text: string, search: string) {
   return normalize(text).includes(normalize(search));
-}
+};
