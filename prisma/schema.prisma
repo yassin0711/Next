@@ -1,12 +1,12 @@
 // Modèle de données LocalImpact
-// Rôles et statuts sont stockés en String (SQLite) : valeurs autorisées dans src/lib/constants.ts
+// Rôles et statuts sont stockés en String : valeurs autorisées dans src/lib/constants.ts
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
