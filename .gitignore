@@ -41,8 +41,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# base locale
-prisma/dev.db*
-
 # notes personnelles
 TACHES.md
