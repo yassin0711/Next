@@ -11,10 +11,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className="min-h-screen bg-gray-50 text-gray-900">
+      <body className="flex min-h-screen flex-col bg-gray-50 text-gray-900 antialiased" suppressHydrationWarning>
         <Providers>
           <Navbar />
-          <main className="mx-auto max-w-5xl p-4">{children}</main>
+          <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{children}</main>
+          <footer className="border-t bg-white py-4 text-center text-sm text-gray-500">
+            LocalImpact · Signalez, soutenez, suivez la résolution
+          </footer>
         </Providers>
       </body>
     </html>
