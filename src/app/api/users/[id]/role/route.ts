@@ -15,6 +15,9 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     const { role } = schema.parse(await req.json());
     if (id === admin.id) throw new HttpError(400, "Vous ne pouvez pas modifier votre propre rôle");
 
+    const exists = await prisma.user.findUnique({ where: { id }, select: { id: true } });
+    if (!exists) throw new HttpError(404, "Utilisateur introuvable");
+
     const user = await prisma.user.update({
       where: { id },
       data: { role },

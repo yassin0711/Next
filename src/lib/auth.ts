@@ -38,10 +38,15 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-/** Utilisateur connecté côté serveur (ou null). */
+/** Utilisateur connecté côté serveur (ou null). Relu en base pour avoir toujours son rôle actuel. */
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions);
-  return session?.user ?? null;
+  if (!session) return null;
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { id: true, name: true, email: true, role: true },
+  });
+  return user && { ...user, role: user.role as Role };
 }
 
 /** À utiliser dans les routes API : lève une erreur si le rôle n'est pas autorisé. */
