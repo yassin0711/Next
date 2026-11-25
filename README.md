@@ -57,10 +57,6 @@ Une inscription crée toujours un compte « Utilisateur ». Seul un administrate
 - Passer à « Résolu » exige une description de l'intervention.
 - L'historique enregistre la création, l'attribution et chaque changement de statut, avec la date et l'auteur.
 
-## Répartition du travail
-
-Voir [TACHES.md](TACHES.md).
-
 ## Limites connues
 
 - La photo d'un signalement est un lien vers une image (pas d'envoi de fichier).
