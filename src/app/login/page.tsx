@@ -27,15 +27,20 @@ export default function LoginPage() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mx-auto mt-10 max-w-sm space-y-4 rounded bg-white p-6 shadow">
-      <h1 className="text-xl font-bold">Connexion</h1>
+    <form onSubmit={onSubmit} className="card mx-auto mt-6 max-w-sm space-y-4 p-8">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">Connexion</h1>
+        <p className="mt-1 text-sm text-gray-500">Heureux de vous revoir</p>
+      </div>
       {error && <ErrorMessage message={error} />}
-      <label className="block">Email<input name="email" type="email" required className="mt-1 w-full rounded border p-2" /></label>
-      <label className="block">Mot de passe<input name="password" type="password" required className="mt-1 w-full rounded border p-2" /></label>
-      <button disabled={loading} className="w-full rounded bg-teal-700 p-2 text-white disabled:opacity-50">
+      <label className="label">Email<input name="email" type="email" required className="input" /></label>
+      <label className="label">Mot de passe<input name="password" type="password" required className="input" /></label>
+      <button disabled={loading} className="btn w-full">
         {loading ? "Connexion..." : "Se connecter"}
       </button>
-      <p className="text-sm">Pas de compte ? <Link href="/register" className="text-teal-700 underline">Inscription</Link></p>
+      <p className="text-center text-sm text-gray-600">
+        Pas de compte ? <Link href="/register" className="font-medium text-teal-700 hover:underline">Inscription</Link>
+      </p>
     </form>
   );
 }

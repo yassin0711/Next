@@ -40,15 +40,15 @@ export default function AdminPage() {
   }
 
   return (
-    <section className="space-y-4">
-      <h1 className="text-2xl font-bold">Administration : utilisateurs</h1>
+    <section className="space-y-6">
+      <h1 className="page-title">Administration : utilisateurs</h1>
       {error && <ErrorMessage message={error} />}
       {!users && !error && <Loading />}
       {users?.length === 0 && <EmptyState message="Aucun utilisateur." />}
       {users && users.length > 0 && (
-        <div className="overflow-x-auto rounded bg-white shadow">
+        <div className="card overflow-x-auto p-0">
           <table className="w-full text-left text-sm">
-            <thead className="bg-gray-100">
+            <thead className="bg-gray-50 text-gray-600">
               <tr><th className="p-3">Nom</th><th className="p-3">Email</th><th className="p-3">Rôle</th></tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@ export default function AdminPage() {
                       value={u.role}
                       disabled={savingId === u.id || u.id === session?.user.id}
                       onChange={(e) => changeRole(u.id, e.target.value as Role)}
-                      className="rounded border p-1"
+                      className="rounded-lg border border-gray-300 px-2 py-1"
                     >
                       {ROLES.map((r) => <option key={r} value={r}>{ROLE_LABELS[r]}</option>)}
                     </select>
