@@ -81,7 +81,7 @@ localimpact/
 │   ├── components/            Composants React réutilisables
 │   │
 │   └── app/                   Pages et routes API (un dossier = une URL)
-│       ├── layout.tsx         Structure commune : barre de navigation, contenu, pied de page
+│       ├── layout.tsx         Structure commune : barre de navigation, contenu
 │       ├── globals.css        Styles communs (btn, card, input…)
 │       ├── page.tsx           Accueil  →  /
 │       ├── login/             Connexion  →  /login
