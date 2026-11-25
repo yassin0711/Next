@@ -24,6 +24,16 @@ export default function StatusForm({
   const canChange = user && (user.role === "ADMIN" || user.id === assigneeId);
   if (!next || !canChange) return null;
 
+  // Pas de changement de statut tant qu'aucun responsable n'est assigné (règle vérifiée aussi côté serveur)
+  if (!assigneeId) {
+    return (
+      <div className="card text-sm text-gray-600">
+        <h2 className="mb-1 font-semibold text-gray-900">Changer le statut</h2>
+        Assignez d&apos;abord un responsable pour faire avancer ce signalement.
+      </div>
+    );
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (next === "RESOLU" && !note.trim()) {
@@ -43,15 +53,15 @@ export default function StatusForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2 rounded bg-white p-4 shadow">
+    <form onSubmit={handleSubmit} className="card space-y-3">
       <h2 className="font-semibold">Changer le statut</h2>
       <textarea
         value={note}
         onChange={(e) => setNote(e.target.value)}
         placeholder={next === "RESOLU" ? "Description de l'intervention (obligatoire)" : "Note (facultative)"}
-        className="w-full rounded border p-2"
+        className="input mt-0"
       />
-      <button className="rounded bg-teal-700 px-4 py-2 text-white">Passer à : {STATUS_LABELS[next]}</button>
+      <button className="btn w-full">Passer à : {STATUS_LABELS[next]}</button>
       {message && <p className="text-sm text-red-700">{message}</p>}
     </form>
   );

@@ -18,6 +18,9 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     if (user.role !== "ADMIN" && report.assigneeId !== user.id) {
       throw new HttpError(403, "Vous n'êtes pas assigné à ce signalement");
     }
+    if (!report.assigneeId) {
+      throw new HttpError(400, "Assignez d'abord un responsable à ce signalement");
+    }
     if (status !== NEXT_STATUS[report.status as Status]) {
       throw new HttpError(400, "Transition non autorisée");
     }
