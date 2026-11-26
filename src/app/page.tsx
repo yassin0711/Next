@@ -33,15 +33,10 @@ const STEPS = [
 
 export default function Home() {
   return (
-    <div className="space-y-16 py-4">
-      {/* Hero Section Épurée et Moderne (Light, Pro, Sans artifice) */}
-      <section className="relative rounded-3xl border border-slate-200/80 bg-gradient-to-b from-teal-50/50 via-white to-white px-6 py-16 text-center sm:px-12 sm:py-20 shadow-2xs">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 space-y-20">
+      {/* Hero Section Épurée et Moderne */}
+      <section className="relative rounded-3xl border border-slate-200/80 bg-gradient-to-b from-teal-50/40 via-white to-white px-6 py-16 text-center sm:px-12 sm:py-20 shadow-2xs">
         <div className="mx-auto max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-teal-200/80 bg-white px-3 py-1 text-xs font-medium text-teal-800 shadow-2xs">
-            <span className="h-1.5 w-1.5 rounded-full bg-teal-600" />
-            <span>Plateforme collaborative de signalement</span>
-          </div>
-
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
             Améliorons notre <br className="hidden sm:inline" />
             <span className="text-teal-700">cadre de vie</span> ensemble
