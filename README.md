@@ -62,3 +62,21 @@ Une inscription crée toujours un compte « Utilisateur ». Seul un administrate
 - La photo d'un signalement est un lien vers une image (pas d'envoi de fichier).
 - La recherche par texte et par lieu est faite en JavaScript après la lecture en base : adaptée à un petit nombre de signalements.
 - Après un changement de rôle, les API appliquent le nouveau rôle tout de suite, mais le menu et l'accès aux pages changent à la reconnexion.
+
+## Résolution des erreurs fréquentes
+
+### `Can't reach database server at localhost:5432`
+Cette erreur indique que Prisma ne parvient pas à contacter PostgreSQL :
+1. **Démarrer le service PostgreSQL** (Windows) :
+   - Ouvrez `services.msc` (Touche Windows + R, tapez `services.msc`).
+   - Cherchez le service **postgresql-x64-XX** (ou votre version installée).
+   - Faites clic droit → **Démarrer**.
+2. **Vérifier les identifiants** dans le fichier `.env` :
+   ```env
+   DATABASE_URL="postgresql://postgres:VOTRE_MOT_DE_PASSE@localhost:5432/localimpact"
+   ```
+3. **Créer la base et exécuter les migrations** :
+   ```bash
+   npm run db:migrate
+   npm run db:seed
+   ```
