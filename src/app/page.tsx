@@ -1,217 +1,178 @@
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/constants";
+import {
+  IconPin,
+  IconThumbUp,
+  IconCheck,
+  IconPlus,
+  IconSearch,
+  IconArrowRight,
+  IconCategory,
+} from "@/components/Icons";
 
 const STEPS = [
   {
     step: "01",
-    title: "Signalez en direct",
-    text: "Une lampe défectueuse, un ascenseur bloqué, un PC en panne ? Décrivez le problème en quelques secondes avec lieu et photo.",
-    icon: (
-      <svg className="h-6 w-6 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 20h9" />
-        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-      </svg>
-    ),
-    badgeColor: "bg-teal-50 border-teal-200 text-teal-700",
+    title: "Signaler",
+    text: "Une panne, une dégradation ou un problème d'accès ? Remplissez une fiche descriptive avec le lieu et une photo.",
+    icon: <IconPin className="h-5 w-5 text-teal-700" />,
   },
   {
     step: "02",
-    title: "Soutenez les urgences",
-    text: "Votez d'un clic pour les signalements qui impactent votre quotidien. Plus un problème est soutenu, plus il est prioritaire.",
-    icon: (
-      <svg className="h-6 w-6 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-      </svg>
-    ),
-    badgeColor: "bg-emerald-50 border-emerald-200 text-emerald-700",
+    title: "Soutenir",
+    text: "Apportez votre soutien aux signalements qui vous concernent pour aider les équipes à identifier les urgences collectives.",
+    icon: <IconThumbUp className="h-5 w-5 text-teal-700" />,
   },
   {
     step: "03",
-    title: "Suivez l'intervention",
-    text: "Attribution à un responsable, passage en cours, compte-rendu de réparation : chaque étape est tracée en toute transparence.",
-    icon: (
-      <svg className="h-6 w-6 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-        <polyline points="22 4 12 14.01 9 11.01" />
-      </svg>
-    ),
-    badgeColor: "bg-blue-50 border-blue-200 text-blue-700",
+    title: "Suivre",
+    text: "Dès l'attribution à un responsable jusqu'à la résolution finale, chaque étape d'intervention est historisée en clair.",
+    icon: <IconCheck className="h-5 w-5 text-teal-700" />,
   },
 ];
 
-const CATEGORY_ICONS: Record<string, string> = {
-  "Matériel défectueux": "🛠️",
-  "Accessibilité": "♿",
-  "Éclairage": "💡",
-  "Propreté": "🧹",
-  "Équipement informatique": "💻",
-  "Autre": "📌",
-};
-
 export default function Home() {
   return (
-    <div className="space-y-16 sm:space-y-24">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-teal-950 to-emerald-950 px-6 py-16 text-center text-white shadow-2xl ring-1 ring-white/10 sm:px-12 sm:py-24">
-        {/* Glow ambient background effects */}
-        <div className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-teal-500/25 blur-3xl sm:h-96 sm:w-96" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl sm:h-96 sm:w-96" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px]" />
-
-        <div className="relative mx-auto max-w-3xl space-y-6">
-          {/* Top Pill */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-900/40 px-3.5 py-1.5 text-xs font-medium text-teal-200 backdrop-blur-md">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Plateforme collaborative pour votre cadre de vie</span>
+    <div className="space-y-16 py-4">
+      {/* Hero Section Épurée et Moderne (Light, Pro, Sans artifice) */}
+      <section className="relative rounded-3xl border border-slate-200/80 bg-gradient-to-b from-teal-50/50 via-white to-white px-6 py-16 text-center sm:px-12 sm:py-20 shadow-2xs">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-teal-200/80 bg-white px-3 py-1 text-xs font-medium text-teal-800 shadow-2xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-teal-600" />
+            <span>Plateforme collaborative de signalement</span>
           </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
             Améliorons notre <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-teal-200 via-emerald-300 to-teal-100 bg-clip-text text-transparent">
-              cadre de vie ensemble
-            </span>
+            <span className="text-teal-700">cadre de vie</span> ensemble
           </h1>
 
-          {/* Description */}
-          <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-            Campus, résidence ou quartier : signalez un problème du quotidien, mobilisez votre communauté et suivez chaque étape de la résolution avec une traçabilité totale.
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            Signalez un dysfonctionnement du quotidien, mobilisez les usagers et suivez la prise en charge par les équipes techniques en toute transparence.
           </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
               href="/signalements/nouveau"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-teal-500/20 transition-all duration-200 hover:from-emerald-400 hover:to-teal-400 hover:shadow-teal-500/30 hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-xs transition hover:bg-teal-800 hover:shadow-sm"
             >
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
+              <IconPlus className="h-4 w-4" />
               <span>Signaler un problème</span>
             </Link>
 
             <Link
               href="/signalements"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition-all duration-200 hover:bg-white/20 hover:border-white/30 hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-xs transition hover:bg-slate-50 hover:text-slate-900"
             >
-              <svg className="h-4 w-4 text-teal-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <span>Voir les signalements</span>
+              <IconSearch className="h-4 w-4 text-slate-500" />
+              <span>Consulter les signalements</span>
             </Link>
           </div>
 
-          {/* Trust points */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 border-t border-white/10 pt-8 text-xs font-medium text-slate-300">
+          {/* Indicateurs clés */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-8 border-t border-slate-100 pt-8 text-xs font-medium text-slate-500">
             <div className="flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-500/20 text-teal-300">✓</span>
-              <span>Prise en charge rapide</span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-100 text-teal-800">
+                <IconCheck className="h-3 w-3" />
+              </span>
+              <span>Traitement étape par étape</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-500/20 text-teal-300">✓</span>
-              <span>Démocratie participative</span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-100 text-teal-800">
+                <IconCheck className="h-3 w-3" />
+              </span>
+              <span>Priorisation par vote collectif</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-500/20 text-teal-300">✓</span>
-              <span>100% transparent</span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-100 text-teal-800">
+                <IconCheck className="h-3 w-3" />
+              </span>
+              <span>Traçabilité complète</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How it works Section */}
-      <section className="space-y-10">
-        <div className="text-center">
-          <p className="text-xs font-extrabold uppercase tracking-widest text-teal-700">Fonctionnement</p>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Un processus simple, collaboratif et efficace
+      {/* Section : Comment ça fonctionne */}
+      <section className="space-y-8">
+        <div className="text-center space-y-1">
+          <p className="text-xs font-bold uppercase tracking-wider text-teal-700">Méthodologie</p>
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            Un processus simple en 3 étapes
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            Chaque voix compte. Notre plateforme connecte directement les usagers aux équipes d'intervention technique.
-          </p>
+          <p className="text-sm text-slate-500">Du signalement initial à la clôture de l&apos;intervention.</p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-3">
           {STEPS.map((s) => (
             <div
               key={s.title}
-              className="group relative rounded-2xl border border-slate-200/80 bg-white p-7 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-teal-300 hover:shadow-xl hover:shadow-teal-900/5"
+              className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs transition hover:border-slate-300 hover:shadow-sm"
             >
-              <div className="flex items-center justify-between gap-3">
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 border border-slate-200/70 shadow-xs transition-colors group-hover:bg-teal-50 group-hover:border-teal-200">
+              <div className="flex items-center justify-between">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 border border-teal-100">
                   {s.icon}
-                </span>
-                <span className={`rounded-full border px-2.5 py-0.5 text-xs font-bold ${s.badgeColor}`}>
-                  Étape {s.step}
-                </span>
+                </div>
+                <span className="text-xs font-bold font-mono text-slate-400">{s.step}</span>
               </div>
-              <h3 className="mt-6 text-lg font-bold text-slate-900 transition group-hover:text-teal-800">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                {s.text}
-              </p>
+              <h3 className="mt-4 text-base font-bold text-slate-900">{s.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Categories quick explorer */}
-      <section className="rounded-3xl border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/70 p-8 shadow-xs sm:p-10">
+      {/* Section : Catégories d'intervention (100% SVG Icons, 0 emoji) */}
+      <section className="space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-widest text-teal-700">Thématiques</p>
-            <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-              Types d&apos;incidents pris en charge
+            <p className="text-xs font-bold uppercase tracking-wider text-teal-700">Domaines</p>
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+              Catégories d&apos;incidents
             </h2>
-            <p className="mt-1 text-sm text-slate-500">Sélectionnez une catégorie pour filtrer les signalements en cours.</p>
+            <p className="text-sm text-slate-500">Filtrer directement les signalements selon le type de problème.</p>
           </div>
-          <Link href="/signalements" className="btn-outline text-xs">
-            Voir tous les incidents →
+          <Link href="/signalements" className="text-xs font-semibold text-teal-700 hover:text-teal-800 hover:underline">
+            Voir toute la liste →
           </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat}
               href={`/signalements?category=${encodeURIComponent(cat)}`}
-              className="flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white p-4 text-center transition-all duration-200 hover:-translate-y-1 hover:border-teal-400 hover:bg-teal-50/30 hover:shadow-md"
+              className="group flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white p-4 text-center transition hover:border-teal-300 hover:bg-teal-50/40 hover:shadow-xs"
             >
-              <span className="text-2xl">{CATEGORY_ICONS[cat] ?? "📌"}</span>
-              <span className="mt-2 text-xs font-semibold text-slate-800 line-clamp-1">{cat}</span>
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 text-slate-700 transition group-hover:bg-teal-100 group-hover:text-teal-800">
+                <IconCategory category={cat} className="h-5 w-5" />
+              </div>
+              <span className="mt-3 text-xs font-semibold text-slate-800 line-clamp-1 group-hover:text-teal-900">
+                {cat}
+              </span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Bottom CTA Banner */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-teal-800 to-emerald-700 p-8 text-white shadow-xl sm:p-12">
-        <div className="relative z-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <div className="max-w-xl space-y-2">
-            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-              Un problème repéré sur les lieux ?
-            </h2>
-            <p className="text-sm leading-relaxed text-teal-100">
-              Ne laissez pas les désagréments s&apos;accumuler. Prenez une photo, remplissez le formulaire en 1 minute et aidez les équipes techniques à intervenir.
+      {/* Bannière d'appel à l'action sobre */}
+      <section className="rounded-2xl border border-teal-200/80 bg-teal-50/70 p-8 sm:p-10">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div className="space-y-1.5 max-w-xl">
+            <h3 className="text-xl font-bold text-teal-950 sm:text-2xl">
+              Vous constatez un problème aujourd&apos;hui ?
+            </h3>
+            <p className="text-sm text-teal-800/90 leading-relaxed">
+              Il suffit d&apos;une minute pour créer une fiche et permettre à l&apos;équipe en charge d&apos;intervenir rapidement.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/signalements/nouveau"
-              className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-teal-900 shadow-md transition-all hover:bg-teal-50 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
-            >
-              Créer un signalement
-            </Link>
-            <Link
-              href="/dashboard"
-              className="rounded-xl border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20 hover:-translate-y-0.5"
-            >
-              Consulter les statistiques
-            </Link>
-          </div>
+          <Link
+            href="/signalements/nouveau"
+            className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition hover:bg-teal-800 shrink-0"
+          >
+            <span>Créer un signalement</span>
+            <IconArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </div>
