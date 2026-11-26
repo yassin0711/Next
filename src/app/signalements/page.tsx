@@ -42,45 +42,86 @@ export default function ReportsPage() {
   }
 
   return (
-    <section className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <section className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="page-title">Signalements</h1>
-          <p className="text-sm text-gray-500">{reports ? `${reports.length} résultat(s)` : " "}</p>
+          <h1 className="page-title">Signalements récents</h1>
+          <p className="page-subtitle">
+            {reports ? `${reports.length} problème(s) répertorié(s)` : "Chargement des signalements..."}
+          </p>
         </div>
-        <Link href="/signalements/nouveau" className="btn">+ Nouveau signalement</Link>
+        <Link href="/signalements/nouveau" className="btn shadow-sm">
+          <span className="text-base leading-none">+</span>
+          <span>Nouveau signalement</span>
+        </Link>
       </div>
 
-      <div className="card grid gap-3 sm:grid-cols-4">
-        <input
-          value={filters.q}
-          onChange={(e) => update("q", e.target.value)}
-          placeholder="🔍 Rechercher..."
-          aria-label="Recherche"
-          className="input mt-0"
-        />
-        <select value={filters.category} onChange={(e) => update("category", e.target.value)} aria-label="Catégorie" className="input mt-0">
-          <option value="">Toutes les catégories</option>
-          {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
-        </select>
-        <input
-          value={filters.location}
-          onChange={(e) => update("location", e.target.value)}
-          placeholder="Lieu"
-          aria-label="Lieu"
-          className="input mt-0"
-        />
-        <select value={filters.status} onChange={(e) => update("status", e.target.value)} aria-label="Statut" className="input mt-0">
-          <option value="">Tous les statuts</option>
-          {STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
-        </select>
+      {/* Filter Bar */}
+      <div className="card grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4 p-5">
+        <div className="relative">
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+            🔍
+          </span>
+          <input
+            value={filters.q}
+            onChange={(e) => update("q", e.target.value)}
+            placeholder="Rechercher par mot-clé..."
+            aria-label="Recherche"
+            className="input mt-0 pl-9"
+          />
+        </div>
+
+        <div>
+          <select
+            value={filters.category}
+            onChange={(e) => update("category", e.target.value)}
+            aria-label="Catégorie"
+            className="input mt-0"
+          >
+            <option value="">Toutes les catégories</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="relative">
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+            📍
+          </span>
+          <input
+            value={filters.location}
+            onChange={(e) => update("location", e.target.value)}
+            placeholder="Filtrer par lieu / salle..."
+            aria-label="Lieu"
+            className="input mt-0 pl-9"
+          />
+        </div>
+
+        <div>
+          <select
+            value={filters.status}
+            onChange={(e) => update("status", e.target.value)}
+            aria-label="Statut"
+            className="input mt-0"
+          >
+            <option value="">Tous les statuts</option>
+            {STATUSES.map((s) => (
+              <option key={s} value={s}>{STATUS_LABELS[s]}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {error && <ErrorMessage message={error} />}
       {!reports && !error && <Loading />}
-      {reports?.length === 0 && <EmptyState message="Aucun signalement trouvé." />}
+      {reports?.length === 0 && (
+        <EmptyState message="Aucun signalement ne correspond à vos critères de recherche." />
+      )}
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      {/* Grid of cards */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {reports?.map((r) => (
           <ReportCard key={r.id} {...r} supports={r._count.supports} />
         ))}
