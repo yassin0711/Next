@@ -23,9 +23,16 @@ export default function ReportsPage() {
   useEffect(() => {
     async function load() {
       setError("");
-      const res = await fetch(`/api/reports?${new URLSearchParams(filters)}`);
-      if (!res.ok) return setError("Impossible de charger les signalements");
-      setReports(await res.json());
+      try {
+        const res = await fetch(`/api/reports?${new URLSearchParams(filters)}`);
+        if (!res.ok) {
+          const data = await res.json().catch(() => null);
+          return setError(data?.error ?? "Impossible de charger les signalements");
+        }
+        setReports(await res.json());
+      } catch {
+        setError("Impossible de joindre le serveur");
+      }
     }
     load();
   }, [filters]);
