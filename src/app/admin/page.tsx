@@ -19,10 +19,19 @@ export default function AdminPage() {
   const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/users")
-      .then(async (r) => (r.ok ? r.json() : Promise.reject((await r.json()).error)))
-      .then(setUsers)
-      .catch((e) => setError(typeof e === "string" ? e : "Impossible de charger les utilisateurs"));
+    async function load() {
+      const generic = "Impossible de charger les utilisateurs";
+      try {
+        const res = await fetch("/api/users");
+        if (res.ok) return setUsers(await res.json());
+        // 500 : message générique ; sinon (403, 503…) message précis renvoyé par l'API
+        const data = await res.json().catch(() => ({}));
+        setError(res.status === 500 || !data.error ? generic : data.error);
+      } catch {
+        setError(generic); // serveur injoignable
+      }
+    }
+    load();
   }, []);
 
   async function changeRole(id: string, role: Role) {

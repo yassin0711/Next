@@ -214,7 +214,11 @@ export async function POST(req: Request) {
 |---|---|
 | `HttpError` | Son code (401, 403, 404, 400…) et son message |
 | Erreur Zod (données invalides) | 400 « Données invalides » |
+| Base de données injoignable (`isDatabaseDown`, dans `auth.ts`) | 503 avec un message demandant de vérifier PostgreSQL |
+| Prisma `P2002` (doublon) / `P2025` (introuvable) | 409 / 404 |
 | Toute autre erreur | 500 « Erreur serveur » |
+
+Si la base tombe, `getCurrentUser` transmet l'erreur au lieu de renvoyer `null` : une API répond 503 (et non 401 « Non connecté ») et une page serveur affiche `app/error.tsx`. Son bouton « Réessayer » appelle `router.refresh()` puis `reset()` pour recharger réellement les données.
 
 ---
 

@@ -57,9 +57,20 @@ export async function getCurrentUser() {
     });
     return user && { ...user, role: user.role as Role };
   } catch (error) {
+    // Base injoignable : on transmet l'erreur (API : 503 via handleApiError, page : error.tsx)
+    // au lieu de faire croire que l'utilisateur n'est pas connecté
+    if (isDatabaseDown(error)) throw error;
     console.warn("[Auth] Impossible de récupérer l'utilisateur en base :", error);
     return null;
   }
+}
+
+/** Vrai si l'erreur vient d'une base de données injoignable (au démarrage ou en cours de route). */
+export function isDatabaseDown(error: unknown) {
+  return (
+    error instanceof Prisma.PrismaClientInitializationError ||
+    (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P1001")
+  );
 }
 
 /** À utiliser dans les routes API : lève une erreur si le rôle n'est pas autorisé. */

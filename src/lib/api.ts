@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 import { ZodError } from "zod";
-import { HttpError } from "@/lib/auth";
+import { HttpError, isDatabaseDown } from "@/lib/auth";
 
 /** Transforme une erreur en réponse JSON propre (401/403/400/404/409/503/500). */
 export function handleApiError(error: unknown) {
@@ -14,8 +14,8 @@ export function handleApiError(error: unknown) {
       { status: 400 }
     );
   }
-  if (error instanceof Prisma.PrismaClientInitializationError) {
-    console.warn("[API] Base de données inaccessible :", error.message);
+  if (isDatabaseDown(error)) {
+    console.warn("[API] Base de données inaccessible :", (error as Error).message);
     return NextResponse.json(
       { error: "Impossible de se connecter à la base de données. Veuillez vérifier que PostgreSQL est bien démarré sur le port 5432." },
       { status: 503 }
