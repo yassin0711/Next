@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-screen flex-col bg-slate-50/70 text-slate-900 antialiased selection:bg-teal-100 selection:text-teal-900" suppressHydrationWarning>
         <Providers>
           <Navbar />
-          <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">{children}</main>
+          <main className="w-full flex-1">{children}</main>
           <Footer />
         </Providers>
       </body>

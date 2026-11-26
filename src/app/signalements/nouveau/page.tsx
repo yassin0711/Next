@@ -33,11 +33,12 @@ export default function NewReportPage() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="card mx-auto max-w-2xl space-y-5 p-8">
-      <div>
-        <h1 className="page-title">Nouveau signalement</h1>
-        <p className="mt-1 text-sm text-gray-500">Décrivez le problème le plus précisément possible.</p>
-      </div>
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+      <form onSubmit={onSubmit} className="card mx-auto max-w-2xl space-y-5 p-8">
+        <div>
+          <h1 className="page-title">Nouveau signalement</h1>
+          <p className="mt-1 text-sm text-gray-500">Décrivez le problème le plus précisément possible.</p>
+        </div>
       <label className="label">Titre
         <input name="title" required placeholder="Ex : Lampe cassée dans le couloir" className="input" />
       </label>
@@ -77,5 +78,6 @@ export default function NewReportPage() {
         {loading ? "Envoi..." : "Envoyer le signalement"}
       </button>
     </form>
+  </div>
   );
 }

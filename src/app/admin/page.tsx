@@ -40,8 +40,9 @@ export default function AdminPage() {
   }
 
   return (
-    <section className="space-y-6">
-      <h1 className="page-title">Administration : utilisateurs</h1>
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+      <section className="space-y-6">
+        <h1 className="page-title">Administration : utilisateurs</h1>
       {error && <ErrorMessage message={error} />}
       {!users && !error && <Loading />}
       {users?.length === 0 && <EmptyState message="Aucun utilisateur." />}
@@ -75,5 +76,6 @@ export default function AdminPage() {
         </div>
       )}
     </section>
+  </div>
   );
 }

@@ -15,9 +15,10 @@ export default async function Page() {
   });
 
   return (
-    <section className="space-y-6">
-      <div>
-        <h1 className="page-title">Mes affectations</h1>
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+      <section className="space-y-6">
+        <div>
+          <h1 className="page-title">Mes affectations</h1>
         <p className="text-sm text-gray-500">Signalements qui vous sont assignés</p>
       </div>
       {reports.length === 0 && <EmptyState message="Aucun signalement assigné." />}
@@ -27,5 +28,6 @@ export default async function Page() {
         ))}
       </div>
     </section>
+  </div>
   );
 }

@@ -33,8 +33,9 @@ export default async function Page() {
   const total = statusData.reduce((sum, s) => sum + s.total, 0);
 
   return (
-    <section className="space-y-6">
-      <h1 className="page-title">Tableau de bord</h1>
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+      <section className="space-y-6">
+        <h1 className="page-title">Tableau de bord</h1>
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="card">
           <p className="text-sm text-gray-500">Signalements</p>
@@ -54,5 +55,6 @@ export default async function Page() {
         <Chart title="Signalements par catégorie" data={categoryData} horizontal />
       </div>
     </section>
+  </div>
   );
 }
