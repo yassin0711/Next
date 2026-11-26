@@ -17,14 +17,22 @@ export default function RegisterPage() {
     if (!parsed.success) return setError(parsed.error.issues[0].message);
 
     setLoading(true);
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(parsed.data),
-    });
-    setLoading(false);
-    if (!res.ok) return setError((await res.json()).error ?? "Erreur");
-    router.push("/login");
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(parsed.data),
+      });
+      setLoading(false);
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        return setError(data?.error ?? "Une erreur est survenue");
+      }
+      router.push("/login");
+    } catch {
+      setLoading(false);
+      setError("Impossible de joindre le serveur");
+    }
   }
 
   return (

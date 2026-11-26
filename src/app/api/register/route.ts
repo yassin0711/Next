@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validations";
 import { handleApiError } from "@/lib/api";
@@ -17,6 +18,9 @@ export async function POST(req: Request) {
     });
     return NextResponse.json(user, { status: 201 });
   } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
+      return NextResponse.json({ error: "Email déjà utilisé" }, { status: 409 });
+    }
     return handleApiError(e);
   }
 }
