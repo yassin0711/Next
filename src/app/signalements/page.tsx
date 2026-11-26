@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CATEGORIES, STATUSES, STATUS_LABELS, type Status } from "@/lib/constants";
 import { EmptyState, ErrorMessage, Loading } from "@/components/States";
 import ReportCard from "@/components/ReportCard";
+import { IconSearch, IconPin, IconPlus } from "@/components/Icons";
 
 type Report = {
   id: string;
@@ -42,26 +43,26 @@ export default function ReportsPage() {
   }
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-6">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="page-title">Signalements récents</h1>
+          <h1 className="page-title">Signalements</h1>
           <p className="page-subtitle">
-            {reports ? `${reports.length} problème(s) répertorié(s)` : "Chargement des signalements..."}
+            {reports ? `${reports.length} problème(s) répertorié(s)` : "Chargement..."}
           </p>
         </div>
-        <Link href="/signalements/nouveau" className="btn shadow-sm">
-          <span className="text-base leading-none">+</span>
+        <Link href="/signalements/nouveau" className="btn shadow-xs">
+          <IconPlus className="h-4 w-4" />
           <span>Nouveau signalement</span>
         </Link>
       </div>
 
       {/* Filter Bar */}
-      <div className="card grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4 p-5">
+      <div className="card grid gap-3 sm:grid-cols-2 lg:grid-cols-4 p-4">
         <div className="relative">
           <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-            🔍
+            <IconSearch className="h-4 w-4" />
           </span>
           <input
             value={filters.q}
@@ -88,12 +89,12 @@ export default function ReportsPage() {
 
         <div className="relative">
           <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-            📍
+            <IconPin className="h-4 w-4" />
           </span>
           <input
             value={filters.location}
             onChange={(e) => update("location", e.target.value)}
-            placeholder="Filtrer par lieu / salle..."
+            placeholder="Filtrer par lieu..."
             aria-label="Lieu"
             className="input mt-0 pl-9"
           />
