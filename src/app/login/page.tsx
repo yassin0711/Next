@@ -21,7 +21,12 @@ export default function LoginPage() {
     setLoading(true);
     const res = await signIn("credentials", { ...parsed.data, redirect: false });
     setLoading(false);
-    if (res?.error) return setError("Email ou mot de passe incorrect");
+    if (res?.error) {
+      if (res.error === "CredentialsSignin") {
+        return setError("Email ou mot de passe incorrect");
+      }
+      return setError(res.error);
+    }
     router.push("/signalements");
     router.refresh();
   }

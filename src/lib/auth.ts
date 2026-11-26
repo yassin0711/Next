@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/lib/validations";
 import type { Role } from "@/lib/constants";
@@ -16,9 +17,16 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         const parsed = loginSchema.safeParse(credentials);
         if (!parsed.success) return null;
-        const user = await prisma.user.findUnique({ where: { email: parsed.data.email } });
-        if (!user || !(await bcrypt.compare(parsed.data.password, user.password))) return null;
-        return { id: user.id, name: user.name, email: user.email, role: user.role as Role };
+        try {
+          const user = await prisma.user.findUnique({ where: { email: parsed.data.email } });
+          if (!user || !(await bcrypt.compare(parsed.data.password, user.password))) return null;
+          return { id: user.id, name: user.name, email: user.email, role: user.role as Role };
+        } catch (error) {
+          if (error instanceof Prisma.PrismaClientInitializationError) {
+            throw new Error("Base de données inaccessible. Vérifiez que PostgreSQL est démarré.");
+          }
+          throw error;
+        }
       },
     }),
   ],
@@ -40,13 +48,18 @@ export const authOptions: NextAuthOptions = {
 
 /** Utilisateur connecté côté serveur (ou null). Relu en base pour avoir toujours son rôle actuel. */
 export async function getCurrentUser() {
-  const session = await getServerSession(authOptions);
-  if (!session) return null;
-  const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
-    select: { id: true, name: true, email: true, role: true },
-  });
-  return user && { ...user, role: user.role as Role };
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.id) return null;
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { id: true, name: true, email: true, role: true },
+    });
+    return user && { ...user, role: user.role as Role };
+  } catch (error) {
+    console.warn("[Auth] Impossible de récupérer l'utilisateur en base :", error);
+    return null;
+  }
 }
 
 /** À utiliser dans les routes API : lève une erreur si le rôle n'est pas autorisé. */
